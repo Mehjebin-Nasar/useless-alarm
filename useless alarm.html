@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Useless Alarm Clock</title>
+  <style>
+    body {
+      background: #fef6e4;
+      font-family: 'Comic Sans MS', cursive;
+      text-align: center;
+      padding: 40px;
+    }
+    h1 {
+      color: #ff6f61;
+    }
+    .clock-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 30px;
+    }
+    input[type="time"] {
+      font-size: 24px;
+      padding: 10px;
+      border-radius: 10px;
+      border: 2px solid #ff6f61;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 18px;
+      margin-top: 20px;
+      background: #fcd5ce;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    #reward {
+      margin-top: 30px;
+      font-size: 20px;
+      color: green;
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>😴 Useless Alarm Clock ⏰</h1>
+  <p>Set an alarm between 5:30 AM and 8:00 AM and win rewards when you snooze!</p>
+
+  <div class="clock-container">
+    <input type="time" id="alarmTime" min="05:30" max="08:00">
+  </div>
+
+  <button onclick="setAlarm()">Set Alarm</button>
+  <div id="reward"></div>
+
+  <div id="alarmBox" class="hidden">
+    <h2>🎵 Alarm Ringing! 🎵</h2>
+    <button onclick="snooze()">Snooze & Get Reward</button>
+  </div>
+
+  <audio id="alarmSound" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" preload="auto"></audio>
+
+  <script>
+    let alarmTime = null;
+    let alarmTimeout;
+    const rewards = [
+      "Free pillow fluff 🛏️",
+      "1 Dream Token 🌙",
+      "Snore Boost +10 😴",
+      "Sleep Points x2 ⭐",
+      "Gold Slumber Award 🥇"
+    ];
+
+    function setAlarm() {
+      const input = document.getElementById('alarmTime');
+      const time = input.value;
+      if (!time) {
+        alert("Please select a time between 5:30 AM and 8:00 AM.");
+        return;
+      }
+      const [hours, minutes] = time.split(":");
+      const alarmDate = new Date();
+      alarmDate.setHours(+hours);
+      alarmDate.setMinutes(+minutes);
+      alarmDate.setSeconds(0);
+
+      const now = new Date();
+      const timeToAlarm = alarmDate - now;
+
+      if (timeToAlarm < 0) {
+        alert("Time already passed. Choose a future time.");
+        return;
+      }
+
+      clearTimeout(alarmTimeout);
+      alarmTimeout = setTimeout(triggerAlarm, timeToAlarm);
+      alert("Alarm set for " + time);
+    }
+
+    function triggerAlarm() {
+      document.getElementById("alarmBox").classList.remove("hidden");
+      document.getElementById("alarmSound").play();
+    }
+
+    function snooze() {
+      const reward = rewards[Math.floor(Math.random() * rewards.length)];
+      alert("You snoozed! Reward: " + reward);
+      document.getElementById("alarmSound").pause();
+      document.getElementById("alarmBox").classList.add("hidden");
+      document.getElementById("reward").innerText = "🎁 " + reward;
+    }
+  </script>
+</body>
+</html>
