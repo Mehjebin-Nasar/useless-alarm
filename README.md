@@ -12,7 +12,7 @@
 
 ### Team Members
 - Team Lead:Rasmin Fathima V.N-MESCET KUNNUKARA
-- 
+- Team Member: Mehjebin Nasar -MESCET KUNNUKARA
 ### Project Description
 [A beautifully useless alarm clock that rewards you for hitting snooze. Wake up just to win absolutely nothing—except fake points and good vibes.
 
